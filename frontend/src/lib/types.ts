@@ -27,3 +27,31 @@ export interface EndpointStat {
   s2xx: number; s3xx: number; s4xx: number; s5xx: number;
 }
 
+export interface ErrorGroup {
+  _id: string; fingerprint: string; type: string; message: string; lastPath?: string;
+  count: number; firstSeen: string; lastSeen: string; status: "open" | "resolved" | "ignored";
+}
+
+export interface ErrorDetail {
+  group: ErrorGroup;
+  recent: { _id: string; stack?: string; path?: string; method?: string; requestId?: string; environment?: string; timestamp: string }[];
+  frequency: { t: string; count: number }[];
+}
+
+export interface LogEntry {
+  _id: string; level: "debug" | "info" | "warn" | "error"; message: string;
+  meta?: Record<string, unknown>; timestamp: string;
+}
+
+export interface AlertRule {
+  _id: string; name: string; metric: "errorRate" | "avgLatency" | "p95Latency";
+  threshold: number; windowMinutes: number; severity: "info" | "warning" | "critical";
+  enabled: boolean; state: "ok" | "firing";
+}
+
+export interface AlertEvent {
+  _id: string; ruleName: string; severity: string; state: "firing" | "resolved";
+  value: number; message: string; createdAt: string;
+}
+
+export interface LiveEvent { requests: number; failed: number; errorEvents: number; avgLatency: number; at: number }

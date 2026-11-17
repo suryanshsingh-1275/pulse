@@ -7,3 +7,7 @@ export const register = asyncHandler(async (req, res) => {
   res.status(201).json({ data: await service.register(req.body) });
 });
 
+export const login = asyncHandler(async (req, res) => {
+  res.json({ data: await service.login(req.body) });
+});
+

@@ -11,3 +11,8 @@ export const login = asyncHandler(async (req, res) => {
   res.json({ data: await service.login(req.body) });
 });
 
+export const me = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.userId);
+  if (!user) throw new ApiError(401, "User no longer exists");
+  res.json({ data: user });
+});

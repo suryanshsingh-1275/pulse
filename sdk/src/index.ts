@@ -220,3 +220,8 @@ export class PulseClient {
   }
 }
 
+const escapeRx = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+export function initPulse(config: PulseConfig) {
+  return new PulseClient(config);
+}
